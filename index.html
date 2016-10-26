@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Subnet Calculator</title>
+<script type="text/javascript" src="js/ipcalc.js"></script>
+<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+</head>
+<body>
+
+    <!-- HEADER -->
+
+    <div id="header">
+        <h1>Subnet Calculator</h1>
+    </div>
+    
+    <!-- WHITESPACE -->
+
+    <!-- MAIN -->
+
+	<div class="main">
+		<form>
+			WAN IP:
+			<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24"/>
+			LAN IP:
+			<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29"/>
+			
+			<input type="button" value="Calculate" onclick="validate()"/>
+		</form>
+	</div>
+	
+	<!-- OUTPUT -->
+	
+	<div id="output"></div>
+
+	<!-- FOOTER -->
+
+    <p id="footer">Specially built for the guys at MR</p>
+
+</body>
+</html>
