@@ -18,24 +18,31 @@
 
     <!-- MAIN -->
 
-	<div class="main">
-		<form>
-			WAN IP:
-			<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24"/>
-			LAN IP:
-			<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29"/>
-			
-			<input type="button" value="Calculate" onclick="validate()"/>
-		</form>
+    <div class="main">
+
+    	<!-- INPUT -->
+
+		<div id="input">
+			<form>
+				WAN IP:
+				<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24"/>
+				LAN IP:
+				<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29"/>
+				
+				<input type="button" value="Calculate" onclick="validate()"/>
+			</form>
+		</div>
+		
+		<!-- OUTPUT -->
+		
+		<div id="message"></div>
+		<div id="output"></div>
+
 	</div>
-	
-	<!-- OUTPUT -->
-	
-	<div id="output"></div>
 
 	<!-- FOOTER -->
 
-    <p id="footer">Specially built for the guys at MR</p>
+    <div id="footer">Specially built for the guys at MR</div>
 
 </body>
 </html>
