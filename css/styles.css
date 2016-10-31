@@ -9,18 +9,27 @@ input {
 }
 
 input[type=button] {
-	font-family: Arial, Helvetica, sans-serif; color: white; background: #45044F; 
-	border: none; border-radius: 0.3em;
+	font-family: Arial, Helvetica, sans-serif; color: white; font-weight: bold;
+	background: #6A247F; border: none; border-radius: 0.3em;
 	width: 50%; margin: 1.3em 25% 0 25%;
 }
 
 input[type=button]:hover {
-	background: #742D7F; cursor: pointer; box-shadow: 0 0 0.3em #742D7F;
+	background: #9F36BF; cursor: pointer; box-shadow: 0 0 0.3em #9F36BF;
+}
+
+#topbar {
+	width: 100%; height: 2em; background: #000;
+	position: fixed; top: 0; padding: 0; margin: 0;
+}
+
+#topbar a {
+	text-decoration: none; color: #fefefe;
 }
 
 #header {
-	text-align: center; color: #fff; background: #45044F;
-	width: 100%; padding: 0.25em 0;
+	text-align: center; color: #fff; background: #6A247F;
+	width: 100%; padding: 2.25em 0 0.25em 0;
 }
 
 .main {
@@ -34,25 +43,40 @@ input[type=button]:hover {
 }
 
 #message {
-	margin: 0; background: yellow;
+	margin: 0;
 }
 
 #output {
-	font-family: Consolas, Monaco, monospace; background: ;
+	font-family: Consolas, Monaco, monospace;
 	font-size: 0.9em;
 	padding: 1em; margin: 0;
 }
 
 
 #footer {
-	font-size: 0.7em; text-align: center; color: silver; background: #000;
+	font-size: 0.8em; text-align: center; color: silver; background: #000;
 	width: 100%; position: fixed; bottom: 0; padding: 0.3em; box-sizing: border-box;
 }
 
 #footer a {
-	color: #B20ACC;
+	color: #BE40E5;
 }
 
 #footer a:hover {
-	color: #E959FF;
+	color: #D448FF;
 }
+
+/* Colors
+
+initial
+header, button 45044F
+button hover 742D7F
+footer a B20ACC
+footer a hover E959FF
+
+MR's banner: 7f2b99;
+Color theme:
+https://color.adobe.com/create/color-wheel/?base=2&rule=Shades&selected=0&name=My%20Color%20Theme&mode=rgb&rgbvalues=0.6225490196077139,0.2107843137254902,0.75,0.4150326797384759,0.14052287581699346,0.5,0.8300653594769518,0.28104575163398693,1,0.20751633986923795,0.07026143790849673,0.25,0.7470588235292567,0.2529411764705882,0.9&swatchOrder=0,1,2,3,4
+
+
+*/
