@@ -3,29 +3,128 @@
  * http://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-12/ip-addresses.html
  * under the heading "The easy way" */
 
+function changeInput() {
+
+	var messageDiv = document.getElementById("message");
+	var outputDiv = document.getElementById("output");
+	messageDiv.innerHTML = "";
+	outputDiv.innerHTML = "";
+
+	var inputField = document.getElementById("inputfield");
+
+	var multipleInputString = ""
+		+ " <div class='description'>WAN IP:</div> "
+		+ " <input type='text' id='wan' placeholder='e.g. 103.241.63.22/24' onkeydown='enter()' /> "
+
+		+ " <div class='description'>LAN IP:</div> "
+		+ " <input type='text' id='lan' placeholder='e.g. 101.100.188.16/29' onkeydown='enter()'/> ";
+
+	var singleInputString = ""
+		+ " <div class='description'>IP Address:</div> "
+		+ " <input type='text' id='wan' placeholder='e.g. 103.241.63.22/24' onkeydown='enter()' /> "
+
+	var singleOrMultiple = document.getElementById("single_or_multiple").value;
+
+
+
+	switch(singleOrMultiple) {
+
+		case "multiple":
+			inputField.innerHTML = multipleInputString;
+			break;
+
+		case "single":
+			inputField.innerHTML = singleInputString;
+			break;
+
+	}
+
+}
+
+function enter() {
+	if (event.keyCode ==13 ) {
+		validate();
+	}
+}
+
 function validate() {
 	
+	
+
 	var messageDiv = document.getElementById("message");
 	var outputDiv = document.getElementById("output");
 	
-	var wan = document.getElementById("wan").value;
-	var lan = document.getElementById("lan").value;
-	
-	var wanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(wan);
-	var lanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(lan);
-	
-	// CIDR regex validation
-	if (wanValidation && lanValidation) {
-		messageDiv.innerHTML = "";
-		calculate();
-	} else {
-		messageDiv.innerHTML = "Please enter valid IP addresses.";
-		outputDiv.innerHTML = "";
-	}
+	var singleOrMultiple = document.getElementById("single_or_multiple").value;
+
+	switch(singleOrMultiple) {
+
+		case "single":
+			var wan = document.getElementById("wan").value;
+			var wanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(wan);
+
+			// CIDR regex validation
+			if (wanValidation) {
+				messageDiv.innerHTML = "";
+				calculateSingle();
+			} else {
+				messageDiv.innerHTML = "Please enter a valid IP address.";
+				outputDiv.innerHTML = "";
+			}
+			break;
+
+		case "multiple":
+			var wan = document.getElementById("wan").value;
+			var wanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(wan);
+
+			var lan = document.getElementById("lan").value;
+			var lanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(lan);
+			
+			// CIDR regex validation
+			if (wanValidation && lanValidation) {
+				messageDiv.innerHTML = "";
+				calculateMultiple();
+			} else {
+				messageDiv.innerHTML = "Please enter valid IP addresses.";
+				outputDiv.innerHTML = "";
+			}
+			break;
+
+	} 
+
 	
 }
 
-function calculate() {
+function calculateSingle() {
+
+	var outputDiv = document.getElementById("output");
+	
+	var wan = document.getElementById("wan").value;
+	
+	var wanIP = wan.split("/")[0]; // splits wan into array of two elements, then get first elements
+	var wanMaskBits = wan.split("/")[1];
+	var wanOctets = wanIP.split(".");
+		
+	// subnet calculation for WAN
+	var wanNetworkOctets = calculateNetworkAddress(wanOctets, wanMaskBits);
+	var wanMaskOctets = calculateSubnetMask(wanMaskBits);
+	var wanGatewayOctets = calculateGateway(wanNetworkOctets);
+	
+	
+	// translation to string
+	var wanGateway = wanGatewayOctets[0]+"."+wanGatewayOctets[1]+"."+wanGatewayOctets[2]+"."+wanGatewayOctets[3];
+	var wanSubnetMask = wanMaskOctets[0]+"."+wanMaskOctets[1]+"."+wanMaskOctets[2]+"."+wanMaskOctets[3];
+		
+	outputDiv.innerHTML = ""
+		+"<div class='bold'>"
+			+"IP Address: "+wan+"<br>"
+		+"</div>"
+		+"<br>"
+		+"Gateway: "+wanGateway+"<br>"
+		+"SubnetMask: "+wanSubnetMask+"<br>";
+
+}
+
+function calculateMultiple() {
 
 	var outputDiv = document.getElementById("output");
 	

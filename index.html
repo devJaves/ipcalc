@@ -10,10 +10,9 @@
 
     <!-- HEADER -->
     <div id="topbar">
-    	<ul>
-    		<li><a href="http://javes.000webhostapp.com/">Javes</a></li>
-    	</ul>	
-
+    	<a href="http://javes.000webhostapp.com/">
+    		<div class="topbutton">Javes</div>
+		</a>
     </div>
 
     <div id="header">
@@ -26,18 +25,39 @@
 
     <div class="main">
 
-    	<!-- INPUT -->
+    	
 
-		<div id="input">
+		<div class="input">
 			<form>
-				WAN IP:
-				<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24"/>
-				LAN IP:
-				<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29"/>
-				
-				<input type="button" value="Calculate" onclick="validate()"/>
+				<select id="single_or_multiple" onchange="changeInput()">
+					<option value="multiple">Multiple Static IP</option>
+					<option value="single">Single Static IP</option>
+				</select>
 			</form>
 		</div>
+
+	</div>
+
+
+    <div class="main">
+
+    	<!-- INPUT -->
+
+    	<form>
+			<div class="input">
+			
+				<div id="inputfield">
+					<div class="description">WAN IP:</div>
+					<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24" onkeydown="enter()" />
+
+					<div class="description">LAN IP:</div>
+					<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29" onkeydown="enter()"/>
+				</div>
+
+				<input type="button" value="Calculate" onclick="validate()"/>
+			
+			</div>
+		</form>
 		
 		<!-- OUTPUT -->
 		
