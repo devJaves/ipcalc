@@ -3,34 +3,38 @@ body {
 	width: 100%; margin:0; background: url("../img/congruent_outline.png");
 }
 
-input, select {
-	width: 100%; height: 3em; padding: 0 1em; margin: 0.2em 0;
-	box-sizing: border-box;
-}
+	input, select {
+		width: 100%; height: 3em; padding: 0 1em; margin: 0.2em 0;
+		box-sizing: border-box;
+	}
 
-input[type=button] {
-	font-family: Arial, Helvetica, sans-serif; color: white; font-weight: bold;
-	background: #6A247F; border: none; border-radius: 0.3em;
-	width: 50%; margin: 1.3em 25% 0 25%;
-}
+	input[type=button] {
+		font-family: Arial, Helvetica, sans-serif; color: white; font-weight: bold;
+		background: #6A247F; border: none; border-radius: 0.3em;
+		width: 50%; margin: 1.3em 25% 0 25%;
+	}
 
-input[type=button]:hover {
-	background: #9F36BF; cursor: pointer; box-shadow: 0 0 0.3em #9F36BF;
-}
+	input[type=button]:hover {
+		background: #9F36BF; cursor: pointer; box-shadow: 0 0 0.3em #9F36BF;
+	}
+
+	input[type=button]:focus {
+		outline: 0;
+	}
 
 #topbar {
 	width: 100%; height: 2em; background: #080808;
 	position: fixed; top: 0; margin: 0; box-sizing: border-box;
 }
 
-.topbutton {
-	width: auto; height: 100%; background: #080808; 
-	padding: 0.5em; margin: 0; box-sizing: border-box; float: left;
-}
+	.topbutton {
+		width: auto; height: 100%; background: #080808; 
+		padding: 0.5em; margin: 0; box-sizing: border-box; float: left;
+	}
 
-#topbar a {
-	text-decoration: none; color: #fefefe;
-}
+	#topbar a {
+		text-decoration: none; color: #fefefe;
+	}
 
 #header {
 	text-align: center; color: #fff; background: #6A247F;
@@ -42,37 +46,44 @@ input[type=button]:hover {
 	padding: 1em; margin: 0 25% 1em; float: left; box-sizing: border-box;
 }
 
-.description {
-	margin-top: 0.4em;
-}
+	.description {
+		margin-top: 0.4em;
+	}
 
-.input {
-	text-align: center; width: 100%;
-}
+	.input {
+		text-align: center; width: 100%;
+	}
 
-#message {
-	margin-top: 1em;
-}
+	#message {
+		margin-top: 1em;
+	}
 
-#output {
-	font-family: Consolas, Monaco, monospace;
-	font-size: 0.9em;
-	padding: 1em; margin-top: 1em;
-}
+	#output {
+		font-family: Consolas, Monaco, monospace;
+		font-size: 0.9em;
+		padding: 1em; margin-top: 1em;
+	}
 
+	.bold {
+		font-weight: bold;
+	}
+
+#sidebar {
+
+}
 
 #footer {
 	font-size: 0.8em; text-align: center; color: silver; background: #000;
 	width: 100%; position: fixed; bottom: 0; padding: 0.3em; box-sizing: border-box;
 }
 
-#footer a {
-	color: #BE40E5;
-}
+	#footer a {
+		color: #BE40E5;
+	}
 
-#footer a:hover {
-	color: #D448FF;
-}
+	#footer a:hover {
+		color: #D448FF;
+	}
 
 /* Colors
 
