@@ -1,6 +1,6 @@
 body {
 	font-family: Arial, Helvetica, sans-serif; font-size: 1em;
-	width: 100%; margin:0; background: url("../img/congruent_outline.png");
+	width: 100%; min-height: 100%; margin:0; background: url("../img/congruent_outline.png");
 }
 
 	input, select {
@@ -43,7 +43,7 @@ body {
 
 .main {
 	background: #fff; width: 50%; min-width: 200px; 
-	padding: 1em; margin: 0 25% 1em; float: left; box-sizing: border-box;
+	padding: 1em; margin: 0 0 1em 25%; float: left; box-sizing: border-box;
 }
 
 	.description {
@@ -68,9 +68,55 @@ body {
 		font-weight: bold;
 	}
 
-#sidebar {
-
+#instructionslink {
+	text-align: right;
 }
+
+	#instructionslink a {
+		font-size: 0.8em; color: #6A247F; cursor: pointer;
+	}
+
+	#instructionslink a:hover {
+		color: #BE40E5;
+	}
+
+#overlay {
+	background: rgba(0,0,0,0.5);
+	top: 0; left: 0; width: 100%; height: 100%; z-index: 10; position: absolute;
+}
+
+	.overlaycontainer {
+		color: #ccc; list-style: none; background: rgba(0,0,0,0.8);
+		width: 80%; padding: 2em; margin: 6em 10%; display: block; box-sizing: border-box;
+	}
+
+		#overlaycontainertop {
+			width: 100%; float: left; box-sizing: border-box; 
+		}
+
+		#cross {
+			height: 2em; float: right; cursor: pointer;
+		}
+
+		#cross:hover {
+			opacity: 0.5;
+		}
+
+		.overlaycontainer h2 {
+			text-align: center;
+		}
+
+		.overlaycontainer li {
+			margin: 1em 0;
+		}
+
+		.overlaycontainer ul {
+			margin-top: 1em;
+		}
+
+		.overlaycontainer img {
+			align-self: center;
+		}
 
 #footer {
 	font-size: 0.8em; text-align: center; color: silver; background: #000;

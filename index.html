@@ -56,22 +56,44 @@
 			
 			</div>
 		</form>
+
+
 		
 		<!-- OUTPUT -->
 		
-		<div id="message">
-			Enter the WAN and LAN IP addresses above in CIDR format. <br>
-			E.g.: 103.241.63.22/24<br>
-			Click "Calculate" to get the relevant IP address information.
-
-		</div>
+		<div id="message"></div>
 		<div id="output"></div>
 
+
+		<div id="instructionslink"><a onclick="openoverlay()">How to use</a></div>
+
+	</div>
+
+	<!-- INSTRUCTIONS -->
+
+	<div id="overlay">
+		<div class="overlaycontainer">
+			<div id="overlaycontainertop"><img id="cross" src="img/crosswhite.png" onclick="closeoverlay()" /></div>
+			<h2>How to use</h2>
+			<ol>
+				<li>Select the "type" of static IP - multiple or single static IP</li>
+				<img src="img/tutorial/tutorial_1select.png"/>
+				<li>Input the IP address(es) in <b>CIDR format</b>
+				<img src="img/tutorial/tutorial_2input.png"/>
+					<ul>
+						<li><b>Single</b> static IP requires just the IP address (which is actually the WAN). The number after the slash is likely "24" (needs confirmation)</li>
+						<li><b>Multiple</b> static IP requires both the WAN and LAN IP addresses. The number after the slash for WAN IP is likely "24" (needs confirmation)</li>
+						<li>The CIDR format has 3 decimal dots and 1 slash</li>
+						<li>Example of an IP address in CIDR format: 179.17.161.114/24</li>
+					</ul>
+				</li>
+				<li>Click on "Calculate"</li>
+				<li>Profit!</li>
+			</ol>
+		</div>
 	</div>
 
 	<!-- SIDEBAR -->
-	<div id="sidebar">
-	</div>
 
 	<!-- FOOTER -->
 
