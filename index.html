@@ -4,7 +4,8 @@
 <meta charset="ISO-8859-1">
 <title>Subnet Calculator</title>
 <script type="text/javascript" src="js/ipcalc.js"></script>
-<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+<script type="text/javascript" src="js/ipcalc_effects.js"></script>
+<link rel="stylesheet" type="text/css" href="css/ipcalc.css"/>
 </head>
 <body>
 
@@ -76,19 +77,25 @@
 			<div id="overlaycontainertop"><img id="cross" src="img/crosswhite.png" onclick="closeoverlay()" /></div>
 			<h2>How to use</h2>
 			<ol>
-				<li>Select the "type" of static IP - multiple or single static IP</li>
-				<img src="img/tutorial/tutorial_1select.png"/>
-				<li>Input the IP address(es) in <b>CIDR format</b>
-				<img src="img/tutorial/tutorial_2input.png"/>
+				<li>Select the "type" of static IP - multiple or single static IP
+				<div class="overlayimg"><img src="img/tutorial/tutorial_1select.png"/></div>
+				</li>
+
+				<li>Input the IP address(es) in <b>CIDR notation</b>
+				<div class="overlayimg"><img src="img/tutorial/tutorial_2input.png"/></div>
 					<ul>
-						<li><b>Single</b> static IP requires just the IP address (which is actually the WAN). The number after the slash is likely "24" (needs confirmation)</li>
-						<li><b>Multiple</b> static IP requires both the WAN and LAN IP addresses. The number after the slash for WAN IP is likely "24" (needs confirmation)</li>
-						<li>The CIDR format has 3 decimal dots and 1 slash</li>
-						<li>Example of an IP address in CIDR format: 179.17.161.114/24</li>
+						<li>The CIDR notation has 3 decimal dots and 1 slash</li>
+						<li>Example of an IP address in CIDR notation: 179.17.161.114/24</li>
+						<li><b>Single</b> static IP requires just one IP address (which is actually the WAN). The number after the slash is likely "24" (needs confirmation)</li>
+						<li><b>Multiple</b> static IP requires both WAN and LAN IP addresses. The number after the slash for the WAN IP is likely "24" (needs confirmation)</li>
 					</ul>
 				</li>
+
 				<li>Click on "Calculate"</li>
-				<li>Profit!</li>
+
+				<li>Profit!
+				<div class="overlayimg"><img src="img/tutorial/tutorial_3output.png"></div>
+				</li>
 			</ol>
 		</div>
 	</div>

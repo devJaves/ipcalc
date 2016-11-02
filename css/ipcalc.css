@@ -81,8 +81,8 @@ body {
 	}
 
 #overlay {
-	background: rgba(0,0,0,0.5);
-	top: 0; left: 0; width: 100%; height: 100%; z-index: 10; position: absolute;
+	background: rgba(0,0,0,0.5); overflow: hidden; transition: 0.5s;
+	top: 0; left: 0; width: 0; min-height: 100%; z-index: 10; position: absolute;
 }
 
 	.overlaycontainer {
@@ -106,16 +106,25 @@ body {
 			text-align: center;
 		}
 
-		.overlaycontainer li {
-			margin: 1em 0;
+		.overlaycontainer ol {
+			padding: 0; margin: 0; 
 		}
 
 		.overlaycontainer ul {
-			margin-top: 1em;
+			margin-top: 1em; 
+		}
+
+		.overlaycontainer li {
+			margin: 1em 0; 
 		}
 
 		.overlaycontainer img {
-			align-self: center;
+			max-width: 100%;
+		}
+
+		.overlayimg {
+			text-align: center; width: 100%; margin: 0.5em 0; padding: 0; 
+
 		}
 
 #footer {
