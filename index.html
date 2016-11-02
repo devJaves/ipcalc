@@ -9,19 +9,19 @@
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- TOPBAR -->
     <div id="topbar">
     	<a href="http://javes.000webhostapp.com/">
     		<div class="topbutton">Javes</div>
 		</a>
     </div>
 
-    <div id="header">
-        <h1>Subnet Calculator</h1>
-    </div>
-    
-    <!-- WHITESPACE -->
+    <!-- HEADER -->
 
+    <header>
+        <h1>Subnet Calculator</h1>
+    </header>
+    
     <!-- MAIN -->
 
     <div class="main">
@@ -58,8 +58,6 @@
 			</div>
 		</form>
 
-
-		
 		<!-- OUTPUT -->
 		
 		<div id="message"></div>
@@ -86,7 +84,7 @@
 					<ul>
 						<li>The CIDR notation has 3 decimal dots and 1 slash</li>
 						<li>Example of an IP address in CIDR notation: 179.17.161.114/24</li>
-						<li><b>Single</b> static IP requires just one IP address (which is actually the WAN). The number after the slash is likely "24" (needs confirmation)</li>
+						<li><b>Single</b> static IP requires just one IP address (which is actually the WAN IP). The number after the slash is likely "24" (needs confirmation)</li>
 						<li><b>Multiple</b> static IP requires both WAN and LAN IP addresses. The number after the slash for the WAN IP is likely "24" (needs confirmation)</li>
 					</ul>
 				</li>
@@ -100,11 +98,13 @@
 		</div>
 	</div>
 
-	<!-- SIDEBAR -->
+	<!-- WHITESPACE -->
+
+	<div id="empty"></div>
 
 	<!-- FOOTER -->
 
-    <div id="footer">Specially built for the guys at MR. Source code can be found <a href="https://github.com/devJaves/ipcalc">here</a>.</div>
+    <footer>Specially built for the guys at MR. Source code can be found <a href="https://github.com/devJaves/ipcalc">here</a>.</footer>
 
 </body>
 </html>

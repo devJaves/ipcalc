@@ -22,6 +22,15 @@ body {
 		outline: 0;
 	}
 
+	b {
+		font-weight: bold;
+	}
+
+header {
+	text-align: center; color: #fff; background: #6A247F;
+	width: 100%; padding: 2.25em 0 0.25em 0; margin-bottom: 1em; cursor: default;
+}
+
 #topbar {
 	width: 100%; height: 2em; background: #080808;
 	position: fixed; top: 0; margin: 0; box-sizing: border-box;
@@ -35,11 +44,6 @@ body {
 	#topbar a {
 		text-decoration: none; color: #fefefe;
 	}
-
-#header {
-	text-align: center; color: #fff; background: #6A247F;
-	width: 100%; padding: 2.25em 0 0.25em 0; margin-bottom: 1em;
-}
 
 .main {
 	background: #fff; width: 50%; min-width: 200px; 
@@ -55,17 +59,13 @@ body {
 	}
 
 	#message {
-		margin-top: 1em;
+		color: red; margin-top: 1em; font-size: 0.9em;
+		padding: 1em; background: rgba(0, 0, 0, 0.2); display: none;
 	}
 
 	#output {
-		font-family: Consolas, Monaco, monospace;
-		font-size: 0.9em;
-		padding: 1em; margin-top: 1em;
-	}
-
-	.bold {
-		font-weight: bold;
+		font-family: Consolas, Monaco, monospace; font-size: 0.9em;
+		padding: 1em; margin-top: 1em; background: rgba(0, 0, 0, 0.2); display: none;
 	}
 
 #instructionslink {
@@ -127,16 +127,20 @@ body {
 
 		}
 
-#footer {
+#empty {
+	width: 100%; height: 2em; padding: 0; margin: 0; float: left;
+}
+
+footer {
 	font-size: 0.8em; text-align: center; color: silver; background: #000;
 	width: 100%; position: fixed; bottom: 0; padding: 0.3em; box-sizing: border-box;
 }
 
-	#footer a {
+	footer a {
 		color: #BE40E5;
 	}
 
-	#footer a:hover {
+	footer a:hover {
 		color: #D448FF;
 	}
 

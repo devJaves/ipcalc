@@ -8,7 +8,9 @@ function changeInput() {
 	var messageDiv = document.getElementById("message");
 	var outputDiv = document.getElementById("output");
 	messageDiv.innerHTML = "";
+	messageDiv.style.display = "none";
 	outputDiv.innerHTML = "";
+	outputDiv.style.display = "none";
 
 	var inputField = document.getElementById("inputfield");
 
@@ -48,8 +50,6 @@ function enter() {
 }
 
 function validate() {
-	
-	
 
 	var messageDiv = document.getElementById("message");
 	var outputDiv = document.getElementById("output");
@@ -65,10 +65,14 @@ function validate() {
 			// CIDR regex validation
 			if (wanValidation) {
 				messageDiv.innerHTML = "";
+				messageDiv.style.display = "none";
 				calculateSingle();
 			} else {
 				messageDiv.innerHTML = "Please enter a valid IP address.";
+				messageDiv.style.display = "block";
+
 				outputDiv.innerHTML = "";
+				outputDiv.style.display = "none";
 			}
 			break;
 
@@ -82,15 +86,18 @@ function validate() {
 			// CIDR regex validation
 			if (wanValidation && lanValidation) {
 				messageDiv.innerHTML = "";
+				messageDiv.style.display = "none";
 				calculateMultiple();
 			} else {
-				messageDiv.innerHTML = "Please enter valid IP addresses.";
+				messageDiv.innerHTML = "Please enter valid WAN and LAN IP addresses.";
+				messageDiv.style.display = "block";
+
 				outputDiv.innerHTML = "";
+				outputDiv.style.display = "none";
 			}
 			break;
 
-	} 
-
+	}
 	
 }
 
@@ -115,12 +122,14 @@ function calculateSingle() {
 	var wanSubnetMask = wanMaskOctets[0]+"."+wanMaskOctets[1]+"."+wanMaskOctets[2]+"."+wanMaskOctets[3];
 		
 	outputDiv.innerHTML = ""
-		+"<div class='bold'>"
+		+"<b>"
 			+"IP Address: "+wan+"<br>"
-		+"</div>"
+		+"</b>"
 		+"<br>"
 		+"Gateway: "+wanGateway+"<br>"
 		+"SubnetMask: "+wanSubnetMask+"<br>";
+
+	outputDiv.style.display = "block";
 
 }
 
@@ -165,10 +174,10 @@ function calculateMultiple() {
 	var lanSubnetMask 	= lanMaskOctets[0]+"."+lanMaskOctets[1]+"."+lanMaskOctets[2]+"."+lanMaskOctets[3];
 	
 	outputDiv.innerHTML = ""
-		+"<div class='bold'>"
+		+"<b>"
 			+"WAN IP: "+wan+"<br>"
 			+"LAN IP: "+lan+"<br>"
-		+"</div>"
+		+"</b>"
 		+"<br>"
 		+"WAN Gateway: "+wanGateway+"<br>"
 		+"WAN SubnetMask: "+wanSubnetMask+"<br>"
@@ -179,6 +188,8 @@ function calculateMultiple() {
 		+"LAN Useable: "+lanFirstHost+" - "+lanLastHost+"<br>"
 		+"LAN Broadcast: "+lanBroadcast+"<br>"
 		+"LAN Subnet Mask: "+lanSubnetMask;
+
+	outputDiv.style.display = "block";
 
 }
 
