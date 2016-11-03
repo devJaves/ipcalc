@@ -3,9 +3,9 @@ body {
 	width: 100%; min-height: 100%; margin:0; background: url("../img/congruent_outline.png");
 }
 
-	input, select {
+	input, select, option {
 		width: 100%; height: 3em; padding: 0 1em; margin: 0.2em 0;
-		box-sizing: border-box;
+		box-sizing: border-box; text-align: center; text-align-last: center; 
 	}
 
 	input[type=button] {
