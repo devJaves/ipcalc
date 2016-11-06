@@ -113,10 +113,6 @@ header {
 
 		}
 
-#empty {
-	width: 100%; height: 2em; padding: 0; margin: 0; float: left;
-}
-
 footer {
 	font-size: 0.8em; text-align: center; color: silver; background: #000;
 	width: 100%; position: fixed; bottom: 0; padding: 0.3em; box-sizing: border-box;
@@ -158,11 +154,11 @@ footer {
 	}
 
 	select {
-		font-weight: bold; cursor: pointer;
+		font-weight: bold; background: inherit; cursor: pointer;
 	}
 
 	input[type=text], select {
-		width: 90%; border-style: none none solid none; border-bottom: 1px solid #9e9e9e;
+		background: inherit; width: 90%; border-style: none none solid none; border-bottom: 1px solid #9e9e9e;
 		outline: none; margin: -0.2em 0 0.6em; 
 	}
 
