@@ -44,22 +44,20 @@
 
     	<!-- INPUT -->
 
-    	<form>
-			<div class="input">
-			
-				<div id="inputfield">
-					<div class="description">WAN IP:</div>
-					<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24" onkeydown="enter()" />
+		<div class="input">
+		
+			<div id="inputfield">
+				<div class="description">WAN IP:</div>
+				<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24" onkeydown="enter()" />
 
-					<div class="description">LAN IP:</div>
-					<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29" onkeydown="enter()"/>
-				</div>
-
-				<input type="button" value="Calculate" onclick="validate()"/>
-			
+				<div class="description">LAN IP:</div>
+				<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29" onkeydown="enter()"/>
 			</div>
-		</form>
 
+			<input type="button" value="Calculate" onclick="validate()"/>
+		
+		</div>
+		
 		<!-- OUTPUT -->
 		
 		<div id="message"></div>
@@ -102,7 +100,7 @@
 
 	<!-- WHITESPACE -->
 
-	<div id="empty"></div>
+	
 
 	<!-- FOOTER -->
 

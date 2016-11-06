@@ -5,6 +5,7 @@
 
 function changeInput() {
 
+	/* on change of selection, reset message to blank and hide output div */
 	var messageDiv = document.getElementById("message");
 	var outputDiv = document.getElementById("output");
 	messageDiv.innerHTML = "";
@@ -12,6 +13,7 @@ function changeInput() {
 	outputDiv.innerHTML = "";
 	outputDiv.style.display = "none";
 
+	/* definition of the field to print in and things to print */
 	var inputField = document.getElementById("inputfield");
 
 	var multipleInputString = ""
@@ -28,7 +30,7 @@ function changeInput() {
 	var singleOrMultiple = document.getElementById("single_or_multiple").value;
 
 
-
+	/* on change of selection, print relevant input fields */
 	switch(singleOrMultiple) {
 
 		case "multiple":
@@ -98,6 +100,8 @@ function validate() {
 			break;
 
 	}
+
+	document.activeElement.blur();
 	
 }
 
