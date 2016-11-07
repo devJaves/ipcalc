@@ -56,13 +56,15 @@ function validate() {
 	var messageDiv = document.getElementById("message");
 	var outputDiv = document.getElementById("output");
 	
+	var cidrRegex = new RegExp(/^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\/(30|([1-2][0-9])|[8-9])$/);
+
 	var singleOrMultiple = document.getElementById("single_or_multiple").value;
 
 	switch(singleOrMultiple) {
 
 		case "single":
 			var wan = document.getElementById("wan").value;
-			var wanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(wan);
+			var wanValidation = cidrRegex.test(wan);
 
 			// CIDR regex validation
 			if (wanValidation) {
@@ -80,10 +82,10 @@ function validate() {
 
 		case "multiple":
 			var wan = document.getElementById("wan").value;
-			var wanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(wan);
+			var wanValidation = cidrRegex.test(wan);
 
 			var lan = document.getElementById("lan").value;
-			var lanValidation = /(((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[1-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|(2[0-4][0-9])|([1-9][0-9])|[0-9])\/(30|([1-2][0-9])|[8-9]))/.test(lan);
+			var lanValidation = cidrRegex.test(lan);
 			
 			// CIDR regex validation
 			if (wanValidation && lanValidation) {
