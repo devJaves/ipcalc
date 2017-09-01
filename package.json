@@ -1,0 +1,28 @@
+{
+  "name": "subnet-calculator",
+  "version": "3.0.0",
+  "description": "Subnet Calculator, specially built for the guys at MR.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"serve": "cd src && http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesngyz/subnet-calculator.git"
+  },
+  "keywords": [
+    "IP",
+    "Subnet"
+  ],
+  "author": "jamesng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesngyz/subnet-calculator/issues"
+  },
+  "homepage": "https://github.com/jamesngyz/subnet-calculator#readme",
+  "private": "true",
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}
