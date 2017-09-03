@@ -44,7 +44,7 @@ header {
 		text-align: center; width: 100%;
 	}
 
-	#message {
+	#error {
 		color: red; margin-top: 1em; font-size: 0.9em;
 		padding: 1em; background: rgba(0, 0, 0, 0.2); display: none;
 	}

@@ -1,45 +1,28 @@
-
 /* Variable names used here are based on the terms used in:
  * http://www.cisco.com/c/en/us/about/press/internet-protocol-journal/back-issues/table-contents-12/ip-addresses.html
  * under the heading "The easy way" */
 (function(){
 
-	var messageDiv =document.getElementById("message");
+	var ipInputsDiv = document.getElementById("ip_inputs");
 	var outputDiv = document.getElementById("output");
-	var inputField = document.getElementById("inputfield");
+	var errorDiv = document.getElementById("error");
 
-	var singleOrMultiple = document.getElementById("single_or_multiple").value;
+	var modeSingleOrMultiple;
 
-	var multipleInputString = ""
-	+ " <div class='description'>WAN IP:</div> "
-	+ " <input type='text' id='wan' placeholder='e.g. 103.241.63.22/24' onkeydown='onKeydownInput()' /> "
-
-	+ " <div class='description'>LAN IP:</div> "
-	+ " <input type='text' id='lan' placeholder='e.g. 101.100.188.16/29' onkeydown='onKeydownInput()'/> ";
-
-	var singleInputString = ""
-	+ " <div class='description'>IP Address:</div> "
-	+ " <input type='text' id='wan' placeholder='e.g. 103.241.63.22/24' onkeydown='onKeydownInput()' /> "
-
-	const CIDR = new RegExp(/^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\/(30|([1-2][0-9])|[8-9])$/);
-
-	const INVALID_SINGLE_IP = "Please enter a valid IP address.";
-	const INVALID_MULTIPLE_IP = "Please enter valid WAN and LAN IP addresses.";
+	window["onLoadPage"] = function() {
+		getMode();
+	}
 
 	window["onChangeSingleOrMultiple"] = function() {
-		clearAndHideMessage();
 		clearAndHideOutput();
-		checkSingleOrMultiple();
-		displayInputFieldBasedOnSingleOrMultiple();
+		clearAndHideError();
+		getMode();
+		displayInputFieldsBasedOnMode();
 	}
 
-	function checkSingleOrMultiple() {
-		singleOrMultiple = document.getElementById("single_or_multiple").value;
-	}
-
-	function clearAndHideMessage() {
-		messageDiv.innerHTML = "";
-		messageDiv.style.display = "none";
+	function clearAndHideError() {
+		errorDiv.innerHTML = "";
+		errorDiv.style.display = "none";
 	}
 
 	function clearAndHideOutput() {
@@ -47,57 +30,94 @@
 		outputDiv.style.display = "none";
 	}
 
-	const SINGLE = "single";
-	const MULTIPLE = "multiple";
+	function getMode() {
+		modeSingleOrMultiple = document.getElementById("single_or_multiple").value;
+	}
 
-	function displayInputFieldBasedOnSingleOrMultiple() {
-		switch(singleOrMultiple) {
-			case "multiple":
-				inputField.innerHTML = multipleInputString;
-				break;
-			case "single":
-				inputField.innerHTML = singleInputString;
-				break;
-		}
+	const MODE_SINGLE_STATIC_IP = "single";
+	const MODE_MULTIPLE_STATIC_IP = "multiple";
+
+	const INPUT_FIELD_FOR_MULTIPLE = ""
+	+ " <div class='description'>WAN IP:</div> "
+	+ " <input type='text' id='wan' placeholder='e.g. 103.241.63.22/24' onkeydown='onKeydownInput()' /> "
+
+	+ " <div class='description'>LAN IP:</div> "
+	+ " <input type='text' id='lan' placeholder='e.g. 101.100.188.16/29' onkeydown='onKeydownInput()'/> ";
+
+	const INPUT_FIELD_FOR_SINGLE = ""
+	+ " <div class='description'>IP Address:</div> "
+	+ " <input type='text' id='wan' placeholder='e.g. 103.241.63.22/24' onkeydown='onKeydownInput()' /> ";
+	
+	function displayInputFieldsBasedOnMode() {
+		if (modeSingleOrMultiple == MODE_SINGLE_STATIC_IP)
+			ipInputsDiv.innerHTML = INPUT_FIELD_FOR_SINGLE;
+
+		else if (modeSingleOrMultiple == MODE_MULTIPLE_STATIC_IP)
+			ipInputsDiv.innerHTML = INPUT_FIELD_FOR_MULTIPLE;
 	}
 
 	window["onKeydownInput"] = function() {
-		if (event.keyCode ==13 )
-			validateInputs();
+		if (event.keyCode == 13 ) // 13 == enter
+			processRequest();
 	}
 
 	window["onClickSubmit"] = function() {
-		validateInputs();
+		processRequest();
 	}
+
+	function processRequest() {
+		getWanInput();
+		prepareVariablesBasedOnMode();
+		validateAndCalculate();
+		blurActiveElement();
+	}
+
+	var wan;
+	var lan;
+
+	function getWanInput() {
+		wan = document.getElementById("wan").value;
+	}
+	function getLanInput() {
+		lan = document.getElementById("lan").value;
+	}
+
+	function prepareVariablesBasedOnMode() {
+		if (modeSingleOrMultiple == MODE_SINGLE_STATIC_IP) 
+			prepareSingleIpValidationAndCalculation();
+		else if (modeSingleOrMultiple == MODE_MULTIPLE_STATIC_IP)
+			prepareMultipleIpValidationAndCalculation();
+	}
+
+	const ERROR_SINGLE_IP = "Please enter a valid IP address.";
+	const ERROR_MULTIPLE_IP = "Please enter valid WAN and LAN IP addresses.";
 
 	var isValidInput;
 	var doCalculation;
 	var errorMessage;
 
-	function validateInputs() {
-		if (singleOrMultiple == SINGLE) 
-			prepareForCalculationOfSingle();
-		else if (singleOrMultiple == MULTIPLE)
-			prepareForCalculationOfMultiple();
-		validateInputsAndCalculate();
-		blurActiveElement();
-	}
-
-	function prepareForCalculationOfSingle() {
-		isValidInput = isValidWan();
+	function prepareSingleIpValidationAndCalculation() {
+		isValidInput = isValidCidrIp(wan);
 		doCalculation = calculateSingle();
-		errorMessage = INVALID_SINGLE_IP;
+		errorMessage = ERROR_SINGLE_IP;
 	}
 
-	function prepareForCalculationOfMultiple() {
-		isValidInput = isValidWan() && isValidLan();
+	function prepareMultipleIpValidationAndCalculation() {
+		getLanInput();
+		isValidInput = isValidCidrIp(wan) && isValidCidrIp(lan);
 		doCalculation = calculateMultiple();
-		errorMessage = INVALID_MULTIPLE_IP;
+		errorMessage = ERROR_MULTIPLE_IP;
 	}
 
-	function validateInputsAndCalculate() {
+	const CIDR = new RegExp(/^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\/(30|([1-2][0-9])|[8-9])$/);
+
+	function isValidCidrIp(ip) {
+		return CIDR.test(ip);
+	}
+
+	function validateAndCalculate() {
 		if (isValidInput) {
-			clearAndHideMessage();
+			clearAndHideError();
 			doCalculation;
 		} else {
 			setAndDisplayMessage(errorMessage);
@@ -105,115 +125,142 @@
 		}
 	}
 
+	function setAndDisplayMessage(message) {
+		errorDiv.innerHTML = message;
+		errorDiv.style.display = "block";
+	}
+
 	function blurActiveElement() {
 		document.activeElement.blur();
 	}
 
-	function isValidWan() {
-		var wan = document.getElementById("wan").value;
-		return CIDR.test(wan);
-	}
+	var outputDiv;
 
-	function isValidLan() {
-		var lan = document.getElementById("lan").value;
-		return CIDR.test(lan);
-	}
+	var wanMaskBits;
+	var wanOctets;
 
-	function setAndDisplayMessage(message) {
-		messageDiv.innerHTML = message;
-		messageDiv.style.display = "block";
-	}
+	var wanNetworkOctets;
+	var wanMaskOctets;
+	var wanGatewayOctets;
+
+	var wanGateway;
+	var wanSubnetMask;
 
 	function calculateSingle() {
-
-		var outputDiv = document.getElementById("output");
-		
-		var wan = document.getElementById("wan").value;
-		
-		var wanIP = wan.split("/")[0]; // splits wan into array of two elements, then get first elements
-		var wanMaskBits = wan.split("/")[1];
-		var wanOctets = wanIP.split(".");
-			
-		// subnet calculation for WAN
-		var wanNetworkOctets = calculateNetworkAddress(wanOctets, wanMaskBits);
-		var wanMaskOctets = calculateSubnetMask(wanMaskBits);
-		var wanGatewayOctets = calculateGateway(wanNetworkOctets);
-		
-		
-		// translation to string
-		var wanGateway = wanGatewayOctets[0]+"."+wanGatewayOctets[1]+"."+wanGatewayOctets[2]+"."+wanGatewayOctets[3];
-		var wanSubnetMask = wanMaskOctets[0]+"."+wanMaskOctets[1]+"."+wanMaskOctets[2]+"."+wanMaskOctets[3];
-			
-		outputDiv.innerHTML = ""
-			+"<b>"
-				+"IP Address: "+wan+"<br>"
-			+"</b>"
-			+"<br>"
-			+"Gateway: "+wanGateway+"<br>"
-			+"SubnetMask: "+wanSubnetMask+"<br>";
-
-		outputDiv.style.display = "block";
-
+		initOutputDiv();
+		splitWanIntoSegments();
+		calculateWanSubnet();
+		joinWanOutputOctetsIntoString();
+		displayOutputForSingle();
 	}
 
-	function calculateMultiple() {
+	function initOutputDiv() {
+		outputDiv = document.getElementById("output");
+	}
 
-		var outputDiv = document.getElementById("output");
-		
-		var wan = document.getElementById("wan").value;
-		var lan = document.getElementById("lan").value;
-		
-		var wanIP = wan.split("/")[0]; // splits wan into array of two elements, then get first elements
-		var wanMaskBits = wan.split("/")[1];
-		var wanOctets = wanIP.split(".");
-		
-		var lanIP = lan.split("/")[0]; // splits wan into array of two elements, then get first elements
-		var lanMaskBits = lan.split("/")[1];
-		var lanOctets = lanIP.split(".");
-		
-		// subnet calculation for WAN
-		var wanNetworkOctets = calculateNetworkAddress(wanOctets, wanMaskBits);
-		var wanMaskOctets = calculateSubnetMask(wanMaskBits);
-		var wanGatewayOctets = calculateGateway(wanNetworkOctets);
-		
-		// subnet calculation for LAN
-		var lanNumOfAddresses 	= calculateNumOfAddresses(lanMaskBits);
-		var lanNetworkOctets 	= calculateNetworkAddress(lanOctets, lanMaskBits);
-		var lanGatewayOctets 	= calculateGateway(lanNetworkOctets);
-		var lanBroadcastOctets	= calculateBroadcastAddress(lanNetworkOctets, lanMaskBits);
-		var lanFirstHostOctets 	= calculateFirstHost(lanNetworkOctets);
-		var lanLastHostOctets 	= calculateLastHost(lanBroadcastOctets);
-		var lanMaskOctets = calculateSubnetMask(lanMaskBits);
-		
-		// translation to string
-		var wanGateway = wanGatewayOctets[0]+"."+wanGatewayOctets[1]+"."+wanGatewayOctets[2]+"."+wanGatewayOctets[3];
-		var wanSubnetMask = wanMaskOctets[0]+"."+wanMaskOctets[1]+"."+wanMaskOctets[2]+"."+wanMaskOctets[3];
-		
-		var lanNetwork 	= lanNetworkOctets[0]+"."+lanNetworkOctets[1]+"."+lanNetworkOctets[2]+"."+lanNetworkOctets[3];
-		var lanGateway 	= lanGatewayOctets[0]+"."+lanGatewayOctets[1]+"."+lanGatewayOctets[2]+"."+lanGatewayOctets[3];
-		var lanBroadcast 	= lanBroadcastOctets[0]+"."+lanBroadcastOctets[1]+"."+lanBroadcastOctets[2]+"."+lanBroadcastOctets[3];
-		var lanFirstHost 	= lanFirstHostOctets[0]+"."+lanFirstHostOctets[1]+"."+lanFirstHostOctets[2]+"."+lanFirstHostOctets[3];
-		var lanLastHost 	= lanLastHostOctets[0]+"."+lanLastHostOctets[1]+"."+lanLastHostOctets[2]+"."+lanLastHostOctets[3];
-		var lanSubnetMask 	= lanMaskOctets[0]+"."+lanMaskOctets[1]+"."+lanMaskOctets[2]+"."+lanMaskOctets[3];
-		
+	function splitWanIntoSegments() {
+		var wanIP = wan.split("/")[0];
+		wanMaskBits = wan.split("/")[1];
+		wanOctets = wanIP.split(".");
+	}
+
+	var lanMaskBits;
+	var lanOctets;
+
+	function splitLanIntoSegments() {
+		var lanIP = lan.split("/")[0];
+		lanMaskBits = lan.split("/")[1];
+		lanOctets = lanIP.split(".");
+	}
+
+	function calculateWanSubnet() {
+		wanNetworkOctets = calculateNetworkAddress(wanOctets, wanMaskBits);
+		wanMaskOctets = calculateSubnetMask(wanMaskBits);
+		wanGatewayOctets = calculateGateway(wanNetworkOctets);
+	}
+
+	function joinWanOutputOctetsIntoString() {
+		wanGateway = wanGatewayOctets[0]+"."+wanGatewayOctets[1]+"."+wanGatewayOctets[2]+"."+wanGatewayOctets[3];
+		wanSubnetMask = wanMaskOctets[0]+"."+wanMaskOctets[1]+"."+wanMaskOctets[2]+"."+wanMaskOctets[3];
+	}
+
+	function displayOutputForSingle() {
 		outputDiv.innerHTML = ""
-			+"<b>"
-				+"WAN IP: "+wan+"<br>"
-				+"LAN IP: "+lan+"<br>"
-			+"</b>"
-			+"<br>"
-			+"WAN Gateway: "+wanGateway+"<br>"
-			+"WAN SubnetMask: "+wanSubnetMask+"<br>"
-			+"<br>"
-			+"No. of static IP: "+lanNumOfAddresses+"<br>"
-			+"LAN Network: "+lanNetwork+"<br>"
-			+"LAN Gateway: "+lanGateway+"<br>"
-			+"LAN Useable: "+lanFirstHost+" - "+lanLastHost+"<br>"
-			+"LAN Broadcast: "+lanBroadcast+"<br>"
-			+"LAN Subnet Mask: "+lanSubnetMask;
+		+"<b>"
+			+"IP Address: "+wan+"<br>"
+		+"</b>"
+		+"<br>"
+		+"Gateway: "+wanGateway+"<br>"
+		+"SubnetMask: "+wanSubnetMask+"<br>";
 
 		outputDiv.style.display = "block";
+	}
 
+	var lanNumOfAddresses;
+	var lanNetworkOctets;
+	var lanGatewayOctets;
+	var lanBroadcastOctets;
+	var lanFirstHostOctets;
+	var lanLastHostOctets;
+	var lanMaskOctets;
+
+	function calculateMultiple() {
+		initOutputDiv();
+		getWanInput();
+		getLanInput();
+		splitWanIntoSegments();
+		splitLanIntoSegments();
+		calculateWanSubnet();
+		calculateLanSubnet();
+		joinWanOutputOctetsIntoString();
+		joinLanOutputOctetsIntoString();
+		displayOutputForMultiple();
+	}
+
+	function calculateLanSubnet() {
+		lanNumOfAddresses 	= calculateNumOfAddresses(lanMaskBits);
+		lanNetworkOctets 	= calculateNetworkAddress(lanOctets, lanMaskBits);
+		lanGatewayOctets 	= calculateGateway(lanNetworkOctets);
+		lanBroadcastOctets	= calculateBroadcastAddress(lanNetworkOctets, lanMaskBits);
+		lanFirstHostOctets 	= calculateFirstHost(lanNetworkOctets);
+		lanLastHostOctets 	= calculateLastHost(lanBroadcastOctets);
+		lanMaskOctets = calculateSubnetMask(lanMaskBits);
+	}
+
+	var lanNetwork;
+	var lanGateway;
+	var lanBroadcast;
+	var lanFirstHost;
+	var lanLastHost;
+	var lanSubnetMask;
+
+	function joinLanOutputOctetsIntoString() {
+		lanNetwork 	= lanNetworkOctets[0]+"."+lanNetworkOctets[1]+"."+lanNetworkOctets[2]+"."+lanNetworkOctets[3];
+		lanGateway 	= lanGatewayOctets[0]+"."+lanGatewayOctets[1]+"."+lanGatewayOctets[2]+"."+lanGatewayOctets[3];
+		lanBroadcast 	= lanBroadcastOctets[0]+"."+lanBroadcastOctets[1]+"."+lanBroadcastOctets[2]+"."+lanBroadcastOctets[3];
+		lanFirstHost 	= lanFirstHostOctets[0]+"."+lanFirstHostOctets[1]+"."+lanFirstHostOctets[2]+"."+lanFirstHostOctets[3];
+		lanLastHost 	= lanLastHostOctets[0]+"."+lanLastHostOctets[1]+"."+lanLastHostOctets[2]+"."+lanLastHostOctets[3];
+		lanSubnetMask 	= lanMaskOctets[0]+"."+lanMaskOctets[1]+"."+lanMaskOctets[2]+"."+lanMaskOctets[3];
+	}
+
+	function displayOutputForMultiple() {
+		outputDiv.innerHTML = ""
+		+"<b>"
+			+"WAN IP: "+wan+"<br>"
+			+"LAN IP: "+lan+"<br>"
+		+"</b>"
+		+"<br>"
+		+"WAN Gateway: "+wanGateway+"<br>"
+		+"WAN SubnetMask: "+wanSubnetMask+"<br>"
+		+"<br>"
+		+"No. of static IP: "+lanNumOfAddresses+"<br>"
+		+"LAN Network: "+lanNetwork+"<br>"
+		+"LAN Gateway: "+lanGateway+"<br>"
+		+"LAN Useable: "+lanFirstHost+" - "+lanLastHost+"<br>"
+		+"LAN Broadcast: "+lanBroadcast+"<br>"
+		+"LAN Subnet Mask: "+lanSubnetMask;
+
+		outputDiv.style.display = "block";
 	}
 
 	function calculateSubnetMask(maskBits) {
@@ -316,13 +363,11 @@
 		}
 
 		return broadcastOctets;
-
 	}
 
 	function calculateNumOfAddresses(maskBits) {
 		
 		var numOfAddresses = Math.pow(2, 32 - maskBits);
 		return numOfAddresses;
-		
 	}
 })();
