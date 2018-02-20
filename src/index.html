@@ -4,13 +4,11 @@
 <meta charset="ISO-8859-1" >
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Subnet Calculator</title>
-<script type="text/javascript" src="js/ipcalc.js"></script>
-<script type="text/javascript" src="js/ipcalc_effects.js"></script>
 <link rel="icon" href="img/favicon.ico"/>
 <link rel="stylesheet" type="text/css" href="css/global.css"/>
 <link rel="stylesheet" type="text/css" href="css/ipcalc.css"/>
 </head>
-<body>
+<body onload="onLoadPage()">
 
     <!-- TOPBAR -->
     <div id="topbar">
@@ -31,7 +29,7 @@
 
 		<div class="input">
 			<form>
-				<select id="single_or_multiple" onchange="changeInput()">
+				<select id="single_or_multiple" onchange="onChangeSingleOrMultiple()">
 					<option value="multiple">Multiple Static IP</option>
 					<option value="single">Single Static IP</option>
 				</select>
@@ -47,21 +45,21 @@
 
 		<div class="input">
 		
-			<div id="inputfield">
+			<div id="ip_inputs">
 				<div class="description">WAN IP:</div>
-				<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24" onkeydown="enter()" />
+				<input type="text" id="wan" placeholder="e.g. 103.241.63.22/24" onkeydown="onKeydownInput()" />
 
 				<div class="description">LAN IP:</div>
-				<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29" onkeydown="enter()"/>
+				<input type="text" id="lan" placeholder="e.g. 101.100.188.16/29" onkeydown="onKeydownInput()"/>
 			</div>
 
-			<input type="button" value="Calculate" onclick="validate()"/>
+			<input type="button" value="Calculate" onclick="onClickSubmit()"/>
 		
 		</div>
 		
 		<!-- OUTPUT -->
 		
-		<div id="message"></div>
+		<div id="error"></div>
 		<div id="output"></div>
 
 
@@ -101,7 +99,8 @@
 
 	<!-- FOOTER -->
 
-    <footer>Specially built for the guys at MR. Source code can be found <a href="https://github.com/jamesngyz/subnet-calculator">here</a>.</footer>
-
+	<footer>Specially built for the guys at MR. Source code can be found <a href="https://github.com/jamesngyz/subnet-calculator">here</a>.</footer>
+	<script type="text/javascript" src="js/ipcalc.js"></script>
+	<script type="text/javascript" src="js/ipcalc_effects.js"></script>
 </body>
 </html>
