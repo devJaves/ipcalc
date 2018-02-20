@@ -1,6 +1,6 @@
 {
   "name": "subnet-calculator",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Subnet Calculator, specially built for the guys at MR.",
   "main": "index.js",
   "scripts": {
